@@ -163,8 +163,9 @@
     <h1 style="margin: 0 0 20px 0;">Projekt-Arbeitsbereich</h1>
     <p>
         Willkommen in deiner Schaltzentrale. Hier behältst du den absoluten Überblick über deine aktiven Projekte, 
-        verknüpften Repositories und deren Status. Alle wichtigen Informationen auf einen Blick, damit du immer weißt, wo du stehst und was als Nächstes ansteht.
-    </p>
+        verknüpften Repositories und deren Status. Alle wichtigen Informationen auf einen Blick, damit du immer weißt,
+         wo du stehst und was als Nächstes ansteht.
+    </p><absolute>
     
     <div id="repo-stats" style="margin: 20px 0; padding: 15px; background: rgba(0, 255, 0, 0.05); border: 1px solid rgba(0, 255, 0, 0.2); border-radius: 4px; font-family: monospace; color: #00ff00; line-height: 1.5;">
         <div>> Verbinde mit GitHub-API...</div>
@@ -184,9 +185,41 @@
           <p>Hello user of this totally awesome OS!</p>
           <img src="Bergmitsee.jpg" alt="Berg mit See" width="500" height="300">
           <p2>Isn't this a beautiful picture?</p2>
-          <audio controls>
-            <source src="C:\Users\phili\Downloads\Manuellsen.mp3" type="audio/mpeg">
-          </audio>
+        </div>
+      </div>
+
+      <div class="window" id="app3" style="display: none; left: 100px; top: 150px; width: 320px;">
+        <div class="windowheader" data-windowid="app3">
+          <span class="headertext">Taschenrechner</span>
+          <div class="closebutton" data-windowid="app3"></div>
+        </div>
+        <div class="window-content" style="padding: 15px;">
+          <div id="calculator-display" style="background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 4px; font-size: 28px; text-align: right; margin-bottom: 10px; font-family: monospace; min-height: 40px; border: 1px solid rgba(0, 255, 0, 0.3);">0</div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+            <button class="calc-btn" onclick="calculatorClear()" style="background: #ff4444;">C</button>
+            <button class="calc-btn" onclick="calculatorAppend('/')" style="background: #ff9800;">/</button>
+            <button class="calc-btn" onclick="calculatorAppend('*')" style="background: #ff9800;">×</button>
+            <button class="calc-btn" onclick="calculatorBackspace()" style="background: #ff4444;">←</button>
+            
+            <button class="calc-btn" onclick="calculatorAppend('7')">7</button>
+            <button class="calc-btn" onclick="calculatorAppend('8')">8</button>
+            <button class="calc-btn" onclick="calculatorAppend('9')">9</button>
+            <button class="calc-btn" onclick="calculatorAppend('-')" style="background: #ff9800;">−</button>
+            
+            <button class="calc-btn" onclick="calculatorAppend('4')">4</button>
+            <button class="calc-btn" onclick="calculatorAppend('5')">5</button>
+            <button class="calc-btn" onclick="calculatorAppend('6')">6</button>
+            <button class="calc-btn" onclick="calculatorAppend('+')" style="background: #ff9800;">+</button>
+            
+            <button class="calc-btn" onclick="calculatorAppend('1')">1</button>
+            <button class="calc-btn" onclick="calculatorAppend('2')">2</button>
+            <button class="calc-btn" onclick="calculatorAppend('3')">3</button>
+            <button class="calc-btn" onclick="calculatorAppend('.')" style="background: #ff9800;">.</button>
+            
+            <button class="calc-btn" onclick="calculatorAppend('0')" style="grid-column: span 2;">0</button>
+            <button class="calc-btn" onclick="calculatorAppend('%')" style="background: #ff9800;">%</button>
+            <button class="calc-btn" onclick="calculatorEquals()" style="background: #4CAF50; grid-column: span 1;">=</button>
+          </div>
         </div>
       </div>
     </div>
@@ -196,7 +229,7 @@
         <div class="taskbar-apps">
           <button class="taskbar-app" data-app="welcome" title="Welcome">🏠</button>
           <button class="taskbar-app" data-app="Hackspace" title="Hackspace">📁</button>
-          <button class="taskbar-app" data-app="app3" title="App 3">⚙️</button>
+          <button class="taskbar-app" data-app="app3" title="Taschenrechner">🧮</button>
         </div>
       </div>
     </div>

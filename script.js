@@ -177,6 +177,56 @@ async function fetchGitHubStats() {
 
 // Führt die Funktion automatisch aus, sobald die Webseite geladen ist
 window.addEventListener('DOMContentLoaded', fetchGitHubStats);
+
+// ===== TASCHENRECHNER FUNKTIONEN =====
+let calculatorDisplay = '0';
+
+function updateCalculatorDisplay() {
+  const display = document.getElementById('calculator-display');
+  if (display) {
+    display.textContent = calculatorDisplay || '0';
+  }
+}
+
+function calculatorAppend(value) {
+  if (calculatorDisplay === '0' && value !== '.') {
+    calculatorDisplay = value;
+  } else if (value === '.' && calculatorDisplay.includes('.')) {
+    return;
+  } else {
+    calculatorDisplay += value;
+  }
+  updateCalculatorDisplay();
+}
+
+function calculatorClear() {
+  calculatorDisplay = '0';
+  updateCalculatorDisplay();
+}
+
+function calculatorBackspace() {
+  if (calculatorDisplay.length > 1) {
+    calculatorDisplay = calculatorDisplay.slice(0, -1);
+  } else {
+    calculatorDisplay = '0';
+  }
+  updateCalculatorDisplay();
+}
+
+function calculatorEquals() {
+  try {
+    const result = eval(calculatorDisplay.replace('÷', '/').replace('×', '*').replace('−', '-'));
+    calculatorDisplay = String(result);
+    updateCalculatorDisplay();
+  } catch (error) {
+    calculatorDisplay = 'Fehler';
+    updateCalculatorDisplay();
+    setTimeout(() => {
+      calculatorDisplay = '0';
+      updateCalculatorDisplay();
+    }, 1500);
+  }
+}
 function addWindowTapHandling(element) {
   element.addEventListener("mousedown", () =>
     handleWindowTap(element)
