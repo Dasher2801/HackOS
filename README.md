@@ -1,5 +1,5 @@
 # HackOS
-Webbasiertes Betriebssystem mit eignem look
-Dieses OS hat ein Wilkommensfenster, einen Projektbereich und sogar einen funktionierenden Taschenrechner.
-HackOS hat an der Topbar immer das aktuelle Datum mit Uhrzeit.
-Jedes Fenster ist schließbar und man kann es dann über die Taskleiste öffnen.
+Web-based operating system with a unique look.
+This OS features a welcome window, a project area, and even a functional calculator.
+HackOS displays the current date and time in the top bar.
+Every window can be closed and then reopened via the taskbar.
