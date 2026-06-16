@@ -125,3 +125,125 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(updateTime, 1000);
   updateTime();
 });
+async function fetchGitHubStats() {
+    const repoUrl = 'https://api.github.com/repos/Dasher2801/HackOS';
+    const commitsUrl = 'https://api.github.com/repos/Dasher2801/HackOS/commits';
+    const statsContainer = document.getElementById('repo-stats');
+
+    try {
+        // 1. Allgemeine Infos zum Repository abrufen
+        const repoResponse = await fetch(repoUrl);
+        if (!repoResponse.ok) throw new Error('Repo nicht gefunden');
+        const repoData = await repoResponse.json();
+
+        // 2. Den neuesten Commit abrufen
+        const commitsResponse = await fetch(commitsUrl);
+        const commitsData = await commitsResponse.json();
+        
+        // Daten extrahieren
+        const repoName = repoData.name;
+        const language = repoData.language || 'JavaScript';
+        const stars = repoData.stargazers_count;
+        
+        const latestCommitMessage = commitsData[0]?.commit?.message || 'Kein Commit gefunden';
+        const commitDate = new Date(commitsData[0]?.commit?.committer?.date).toLocaleString('de-DE', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        // 3. HTML mit den echten Daten füllen
+        statsContainer.innerHTML = `
+            <div style="color: #00ff00; margin-bottom: 6px;"><strong>📁 Workspace:</strong> ~/${repoName}</div>
+            <div style="color: #00ff00; margin-bottom: 6px;"><strong>🟢 Status:</strong> Active (GitHub Sync OK)</div>
+            <div style="color: #00ff00; margin-bottom: 6px;"><strong>🔧 Sprache:</strong> ${language}</div>
+            <div style="color: #00ff00; margin-bottom: 6px;"><strong>⭐ Stars:</strong> ${stars}</div>
+            <div style="color: #88ff88; margin-top: 10px; border-top: 1px dashed rgba(0,255,0,0.2); padding-top: 8px;">
+                <strong>💻 Letzter Commit:</strong> "${latestCommitMessage}"
+                <br><span style="font-size: 0.85em; color: #66cc66;">Am: ${commitDate}</span>
+            </div>
+        `;
+
+    } catch (error) {
+        // Fehleranzeige, falls das Internet weg ist oder die API blockiert
+        statsContainer.innerHTML = `
+            <div style="color: #ff3333;">❌ Fehler beim Laden der Live-Daten.</div>
+            <div style="color: #aaaaaa; font-size: 0.85em;">Offline-Modus aktiv.</div>
+        `;
+    }
+}
+
+// Führt die Funktion automatisch aus, sobald die Webseite geladen ist
+window.addEventListener('DOMContentLoaded', fetchGitHubStats);
+
+// ===== TASCHENRECHNER FUNKTIONEN =====
+let calculatorDisplay = '0';
+
+function updateCalculatorDisplay() {
+  const display = document.getElementById('calculator-display');
+  if (display) {
+    display.textContent = calculatorDisplay || '0';
+  }
+}
+
+function calculatorAppend(value) {
+  if (calculatorDisplay === '0' && value !== '.') {
+    calculatorDisplay = value;
+  } else if (value === '.' && calculatorDisplay.includes('.')) {
+    return;
+  } else {
+    calculatorDisplay += value;
+  }
+  updateCalculatorDisplay();
+}
+
+function calculatorClear() {
+  calculatorDisplay = '0';
+  updateCalculatorDisplay();
+}
+
+function calculatorBackspace() {
+  if (calculatorDisplay.length > 1) {
+    calculatorDisplay = calculatorDisplay.slice(0, -1);
+  } else {
+    calculatorDisplay = '0';
+  }
+  updateCalculatorDisplay();
+}
+
+function calculatorEquals() {
+  try {
+    const result = eval(calculatorDisplay.replace('÷', '/').replace('×', '*').replace('−', '-'));
+    calculatorDisplay = String(result);
+    updateCalculatorDisplay();
+  } catch (error) {
+    calculatorDisplay = 'Fehler';
+    updateCalculatorDisplay();
+    setTimeout(() => {
+      calculatorDisplay = '0';
+      updateCalculatorDisplay();
+    }, 1500);
+  }
+}
+function addWindowTapHandling(element) {
+  element.addEventListener("mousedown", () =>
+    handleWindowTap(element)
+  )
+}
+var topBar = document.querySelector("#top")
+
+function openWindow(element) {
+  element.style.display = "flex";
+  biggestIndex++;  // Increment biggestIndex by 1
+  element.style.zIndex = biggestIndex;
+  topBar.style.zIndex = biggestIndex + 1;
+}
+
+function handleWindowTap(element) {
+  biggestIndex++;  // Increment biggestIndex by 1
+  element.style.zIndex = biggestIndex;
+  topBar.style.zIndex = biggestIndex + 1;
+  deselectIcon(selectedIcon)
+}
