@@ -162,9 +162,13 @@
         <div class="window-content">
     <h1 style="margin: 0 0 20px 0;">Projekt-Arbeitsbereich</h1>
     <p>
-        Willkommen in deiner Schaltzentrale. Hier behältst du den absoluten Überblick über deine aktiven Projekte, 
-        verknüpften Repositories und deren Status. Alle wichtigen Informationen auf einen Blick, damit du immer weißt,
-         wo du stehst und was als Nächstes ansteht.
+        Willkommen in deiner Schaltzentrale.
+         Hier behältst du den absoluten Überblick
+        über deine aktiven Projekte, 
+        verknüpften Repositories und deren Status.
+        Alle wichtigen Informationen auf einen Blick,
+        damit du immer weißt,
+        wo du stehst und was als Nächstes ansteht.
     </p><absolute>
     
     <div id="repo-stats" style="margin: 20px 0; padding: 15px; background: rgba(0, 255, 0, 0.05); border: 1px solid rgba(0, 255, 0, 0.2); border-radius: 4px; font-family: monospace; color: #00ff00; line-height: 1.5;">
@@ -193,6 +197,28 @@
           <p2>Isn't this a beautiful picture?</p2>
         </div>
       </div>
+
+<div class="window" id="terminal" style="display: none; left: 150px; top: 120px; width: 550px;">
+  <div class="windowheader" data-windowid="terminal">
+    <span class="headertext">Hackterm</span>
+    <div class="closebutton" data-windowid="terminal"></div>
+  </div>
+  <div class="window-content" id="terminal-content" style="background: #000; color: #00ff00; font-family: monospace; padding: 15px; height: 320px; display: flex; flex-direction: column; border-radius: 0 0 12px 12px; position: relative; overflow: hidden;">
+    
+    <canvas id="matrix-canvas" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;"></canvas>
+
+    <div id="terminal-cli-wrapper" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+      <div id="terminal-history" style="flex-grow: 1; overflow-y: auto; white-space: pre-wrap; margin-bottom: 10px; font-size: 14px; line-height: 1.4;">Willkommen bei HackOS CLI v1.0.0.
+Tippe 'help' für eine Liste aller Befehle.</div>
+      
+      <div style="display: flex; align-items: center; font-size: 14px;">
+        <span style="color: #88ff88; margin-right: 8px; user-select: none;">hackos@user:~$</span>
+        <input type="text" id="terminal-input" style="flex-grow: 1; background: transparent; border: none; color: #00ff00; font-family: monospace; font-size: 14px; outline: none;" autocomplete="off" spellcheck="false" />
+      </div>
+    </div>
+
+  </div>
+</div>
 
       <div class="window" id="app3" style="display: none; left: 100px; top: 150px; width: 320px;">
         <div class="windowheader" data-windowid="app3">
@@ -236,6 +262,7 @@
           <button class="taskbar-app" data-app="welcome" title="Welcome">🏠</button>
           <button class="taskbar-app" data-app="Hackspace" title="Hackspace">📁</button>
           <button class="taskbar-app" data-app="app3" title="Taschenrechner">🧮</button>
+          <button class="taskbar-app" data-app="terminal" title="Terminal">📟</button>
         </div>
       </div>
     </div>
@@ -243,7 +270,7 @@
     <script>
       function updateTime() {
         const now = new Date();
-        const options = { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+        const options = { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'};
         const formattedTime = now.toLocaleString('en-US', options).replace(',', '');
         document.querySelector('.top-right').textContent = formattedTime;
       }

@@ -247,3 +247,140 @@ function handleWindowTap(element) {
   topBar.style.zIndex = biggestIndex + 1;
   deselectIcon(selectedIcon)
 }
+
+// ===== TERMINAL SIMULATOR LOGIK MIT MATRIX-REGEN =====
+document.addEventListener('DOMContentLoaded', function() {
+  const termInput = document.getElementById('terminal-input');
+  const termHistory = document.getElementById('terminal-history');
+  const cliWrapper = document.getElementById('terminal-cli-wrapper');
+  const canvas = document.getElementById('matrix-canvas');
+  const termContent = document.getElementById('terminal-content');
+
+  if (!termInput || !termHistory || !canvas) return;
+
+  let matrixInterval = null;
+
+  // Reagiert auf Enter im Input-Feld
+  termInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      const commandLine = termInput.value.trim();
+      if (commandLine === '') return;
+
+      termHistory.innerHTML += `\n<span style="color: #88ff88;">hackos@user:~$</span> ${commandLine}`;
+      processCommand(commandLine.toLowerCase());
+
+      termInput.value = '';
+      termHistory.scrollTop = termHistory.scrollHeight;
+    }
+  });
+
+  // Klick auf das Canvas beendet die Matrix wieder
+  canvas.addEventListener('click', stopMatrix);
+
+  function processCommand(cmd) {
+    const args = cmd.split(' ');
+    const primaryCmd = args[0];
+
+    switch(primaryCmd) {
+      case 'help':
+        termHistory.innerHTML += `\n\nVerfügbare Befehle:\n  help      - Zeigt diese Übersicht an\n  matrix    - Startet den digitalen Code-Regen\n  clear     - Leert den Terminal-Bildschirm\n  neofetch  - Zeigt System-Informationen\n  whoami    - Verrät dir, wer du bist`;
+        break;
+        
+      case 'clear':
+        termHistory.innerHTML = 'Bildschirm geleert. Tippe \'help\' für Befehle.';
+        break;
+
+      case 'matrix':
+        startMatrix();
+        break;
+        
+      case 'whoami':
+        termHistory.innerHTML += `\nroot@hackos - Mastermind & System-Architekt.`;
+        break;
+        
+      case 'neofetch':
+        termHistory.innerHTML += `\n\n   /\\_/\\      root@hackos\n  ( o.o )     -----------\n   > ^ <      OS: HackOS v1.0\n              Shell: hack.term`;
+        break;
+        
+      default:
+        termHistory.innerHTML += `\n<span style="color: #ff3333;">Befehl nicht gefunden: '${primaryCmd}'.</span>`;
+    }
+  }
+
+  // --- MATRIX ANIMATIONS LOGIK ---
+  function startMatrix() {
+    // 1. CLI Text ausblenden, Canvas einblenden
+    cliWrapper.style.display = 'none';
+    canvas.style.display = 'block';
+
+    const ctx = canvas.getContext('2d');
+    
+    // Canvas-Größe exakt an das Terminal-Fenster anpassen
+    canvas.width = termContent.clientWidth;
+    canvas.height = termContent.clientHeight;
+
+    // Zeichen-Set (Katakana + Zahlen + Lettern)
+    const chars = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    
+    const fontSize = 14;
+    const columns = Math.floor(canvas.width / fontSize);
+    
+    // Y-Koordinate für jeden Tropfen/Spalte initialisieren
+    const rainDrops = [];
+    for (let x = 0; x < columns; x++) {
+      rainDrops[x] = Math.random() * -20; // Leicht versetzter Start oben
+    }
+
+    function draw() {
+      // Leicht transparenter schwarzer Hintergrund sorgt für den coolen Schweif-Effekt
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#00ff00'; // Matrix-Grün
+      ctx.font = fontSize + 'px monospace';
+      
+      for (let i = 0; i < rainDrops.length; i++) {
+        // Zufälliges Zeichen auswählen
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        
+        // Erstes Zeichen einer Spalte weiß leuchten lassen (wie im Film!)
+        if (Math.random() > 0.98) {
+          ctx.fillStyle = '#fff';
+        } else {
+          ctx.fillStyle = '#00ff00';
+        }
+
+        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+        
+        // Wenn der Tropfen unten ankommt, mit einer Zufallschance zurück nach oben setzen
+        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          rainDrops[i] = 0;
+        }
+        
+        rainDrops[i]++;
+      }
+    }
+
+    // Animation mit ca. 30 FPS starten
+    matrixInterval = setInterval(draw, 33);
+  }
+
+  function stopMatrix() {
+    if (matrixInterval) {
+      clearInterval(matrixInterval);
+      matrixInterval = null;
+      
+      // Canvas wieder verstecken, CLI einblenden
+      canvas.style.display = 'none';
+      cliWrapper.style.display = 'flex';
+      
+      // Kurze Info ausgeben und Input wieder fokussieren
+      termHistory.innerHTML += `\nMatrix-Simulation beendet.`;
+      termInput.focus();
+      termHistory.scrollTop = termHistory.scrollHeight;
+    }
+  }
+});
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii

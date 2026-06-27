@@ -130,3 +130,20 @@
   background: rgba(180, 180, 180, 0.9);
   transform: scale(0.98);
 }
+
+#terminal-history::-webkit-scrollbar {
+  width: 6px;
+}
+
+#terminal-history::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+#terminal-history::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 0, 0.3);
+  border-radius: 3px;
+}
+
+#terminal-history::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 0, 0.5);
+}
