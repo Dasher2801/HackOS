@@ -4,7 +4,7 @@ function getNextZIndex() {
   return ++maxZIndex;
 }
 
-// Make a window draggable
+
 function makeWindowDraggable(element) {
   let initialX = 0;
   let initialY = 0;
@@ -16,7 +16,7 @@ function makeWindowDraggable(element) {
   
   if (header) {
     header.addEventListener('mousedown', function(e) {
-      // Don't drag if clicking on the close button
+
       if (e.target.classList.contains('closebutton') || e.target.closest('.closebutton')) {
         return;
       }
@@ -55,7 +55,7 @@ function makeWindowDraggable(element) {
   };
 }
 
-// Update time continuously
+
 function updateTime() {
   const now = new Date();
   const options = { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -63,15 +63,13 @@ function updateTime() {
   document.querySelector('.top-right').textContent = formattedTime;
 }
 
-// Initialize all windows as draggable
 document.addEventListener('DOMContentLoaded', function() {
   // Make all windows draggable
   const windows = document.querySelectorAll('.window');
   windows.forEach(win => {
     makeWindowDraggable(win);
   });
-  
-  // Setup close buttons
+
   const closeButtons = document.querySelectorAll('.closebutton');
   closeButtons.forEach(btn => {
     btn.addEventListener('click', function(e) {
@@ -86,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Setup taskbar buttons
+
   const taskbarApps = document.querySelectorAll('.taskbar-app');
   taskbarApps.forEach(btn => {
     btn.addEventListener('click', function() {
@@ -105,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
-  // Setup HackOS button
+
   const hackosBut = document.getElementById('welcomeopen');
   if (hackosBut) {
     hackosBut.addEventListener('click', function() {
@@ -121,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Start time updates
+ 
   setInterval(updateTime, 1000);
   updateTime();
 });
@@ -131,16 +129,16 @@ async function fetchGitHubStats() {
     const statsContainer = document.getElementById('repo-stats');
 
     try {
-        // 1. Allgemeine Infos zum Repository abrufen
+    
         const repoResponse = await fetch(repoUrl);
         if (!repoResponse.ok) throw new Error('Repo nicht gefunden');
         const repoData = await repoResponse.json();
 
-        // 2. Den neuesten Commit abrufen
+        
         const commitsResponse = await fetch(commitsUrl);
         const commitsData = await commitsResponse.json();
         
-        // Daten extrahieren
+       
         const repoName = repoData.name;
         const language = repoData.language || 'JavaScript';
         const stars = repoData.stargazers_count;
@@ -154,7 +152,6 @@ async function fetchGitHubStats() {
             minute: '2-digit'
         });
 
-        // 3. HTML mit den echten Daten füllen
         statsContainer.innerHTML = `
             <div style="color: #00ff00; margin-bottom: 6px;"><strong>📁 Workspace:</strong> ~/${repoName}</div>
             <div style="color: #00ff00; margin-bottom: 6px;"><strong>🟢 Status:</strong> Active (GitHub Sync OK)</div>
@@ -167,7 +164,7 @@ async function fetchGitHubStats() {
         `;
 
     } catch (error) {
-        // Fehleranzeige, falls das Internet weg ist oder die API blockiert
+    
         statsContainer.innerHTML = `
             <div style="color: #ff3333;">❌ Fehler beim Laden der Live-Daten.</div>
             <div style="color: #aaaaaa; font-size: 0.85em;">Offline-Modus aktiv.</div>
@@ -175,10 +172,9 @@ async function fetchGitHubStats() {
     }
 }
 
-// Führt die Funktion automatisch aus, sobald die Webseite geladen ist
+
 window.addEventListener('DOMContentLoaded', fetchGitHubStats);
 
-// ===== TASCHENRECHNER FUNKTIONEN =====
 let calculatorDisplay = '0';
 
 function updateCalculatorDisplay() {
@@ -236,19 +232,18 @@ var topBar = document.querySelector("#top")
 
 function openWindow(element) {
   element.style.display = "flex";
-  biggestIndex++;  // Increment biggestIndex by 1
+  biggestIndex++;  
   element.style.zIndex = biggestIndex;
   topBar.style.zIndex = biggestIndex + 1;
 }
 
 function handleWindowTap(element) {
-  biggestIndex++;  // Increment biggestIndex by 1
+  biggestIndex++;  
   element.style.zIndex = biggestIndex;
   topBar.style.zIndex = biggestIndex + 1;
   deselectIcon(selectedIcon)
 }
 
-// ===== TERMINAL SIMULATOR LOGIK MIT MATRIX-REGEN =====
 document.addEventListener('DOMContentLoaded', function() {
   const termInput = document.getElementById('terminal-input');
   const termHistory = document.getElementById('terminal-history');
@@ -260,7 +255,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   let matrixInterval = null;
 
-  // Reagiert auf Enter im Input-Feld
   termInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
       const commandLine = termInput.value.trim();
@@ -274,7 +268,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Klick auf das Canvas beendet die Matrix wieder
   canvas.addEventListener('click', stopMatrix);
 
   function processCommand(cmd) {
@@ -307,43 +300,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // --- MATRIX ANIMATIONS LOGIK ---
-  function startMatrix() {
-    // 1. CLI Text ausblenden, Canvas einblenden
+ function startMatrix() {
     cliWrapper.style.display = 'none';
     canvas.style.display = 'block';
 
     const ctx = canvas.getContext('2d');
-    
-    // Canvas-Größe exakt an das Terminal-Fenster anpassen
+  
     canvas.width = termContent.clientWidth;
     canvas.height = termContent.clientHeight;
 
-    // Zeichen-Set (Katakana + Zahlen + Lettern)
     const chars = "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
     
     const fontSize = 14;
     const columns = Math.floor(canvas.width / fontSize);
     
-    // Y-Koordinate für jeden Tropfen/Spalte initialisieren
     const rainDrops = [];
     for (let x = 0; x < columns; x++) {
-      rainDrops[x] = Math.random() * -20; // Leicht versetzter Start oben
+      rainDrops[x] = Math.random() * -20;
     }
 
     function draw() {
-      // Leicht transparenter schwarzer Hintergrund sorgt für den coolen Schweif-Effekt
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      ctx.fillStyle = '#00ff00'; // Matrix-Grün
+      ctx.fillStyle = '#00ff00'; 
       ctx.font = fontSize + 'px monospace';
       
       for (let i = 0; i < rainDrops.length; i++) {
-        // Zufälliges Zeichen auswählen
         const text = chars[Math.floor(Math.random() * chars.length)];
-        
-        // Erstes Zeichen einer Spalte weiß leuchten lassen (wie im Film!)
+
         if (Math.random() > 0.98) {
           ctx.fillStyle = '#fff';
         } else {
@@ -351,19 +336,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
-        
-        // Wenn der Tropfen unten ankommt, mit einer Zufallschance zurück nach oben setzen
         if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
           rainDrops[i] = 0;
         }
         
         rainDrops[i]++;
       }
-    }
+    } // HIER: Schließt die draw-Funktion sauber ab!
 
-    // Animation mit ca. 30 FPS starten
+    // Startet das Intervall einmalig außerhalb der draw-Funktion
     matrixInterval = setInterval(draw, 33);
-  }
+  } // HIER: Schließt die startMatrix-Funktion sauber ab!
 
   function stopMatrix() {
     if (matrixInterval) {
@@ -381,6 +364,116 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
-iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+
+function updateHackclockDisplay() {
+  const clockDisplay = document.getElementById('clock-display');
+  if (clockDisplay) {
+    const now = new Date();
+    const hrs = String(now.getHours()).padStart(2, '0');
+    const mins = String(now.getMinutes()).padStart(2, '0');
+    const secs = String(now.getSeconds()).padStart(2, '0');
+    clockDisplay.textContent = `${hrs}:${mins}:${secs}`;
+  }
+}
+
+setInterval(updateHackclockDisplay, 1000);
+updateHackclockDisplay(); // Direkt einmal beim Start laden
+
+
+
+let timerInterval = null;
+let timerTimeLeft = 0;
+
+function toggleTimer() {
+  const startBtn = document.getElementById('timer-start-btn');
+  const minInput = document.getElementById('timer-min');
+  const secInput = document.getElementById('timer-sec');
+
+  if (timerInterval) {
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+    if (startBtn) {
+      startBtn.textContent = 'Start';
+      startBtn.style.background = '#4CAF50';
+    }
+  } else {
+
+    if (timerTimeLeft <= 0 && minInput && secInput) {
+      const minutes = parseInt(minInput.value) || 0;
+      const seconds = parseInt(secInput.value) || 0;
+      timerTimeLeft = (minutes * 60) + seconds;
+    }
+
+    if (timerTimeLeft <= 0) return;
+
+    if (minInput && secInput) {
+      minInput.disabled = true;
+      secInput.disabled = true;
+    }
+
+    if (startBtn) {
+      startBtn.textContent = 'Pause';
+      startBtn.style.background = '#ff9800';
+    }
+
+    updateTimerDisplay();
+
+    timerInterval = setInterval(() => {
+      timerTimeLeft--;
+      updateTimerDisplay();
+
+      if (timerTimeLeft <= 0) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        
+        if (startBtn) {
+          startBtn.textContent = 'Start';
+          startBtn.style.background = '#4CAF50';
+        }
+
+        if (minInput && secInput) {
+          minInput.disabled = false;
+          minInput.disabled = false;
+          minInput.value = '';
+          secInput.value = '';
+        }
+
+        alert('⏰ Hackclock: Der Timer ist abgelaufen!');
+      }
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  timerTimeLeft = 0;
+
+  const startBtn = document.getElementById('timer-start-btn');
+  if (startBtn) {
+    startBtn.textContent = 'Start';
+    startBtn.style.background = '#4CAF50';
+  }
+
+  const minInput = document.getElementById('timer-min');
+  const secInput = document.getElementById('timer-sec');
+  if (minInput && secInput) {
+    minInput.disabled = false;
+    secInput.disabled = false;
+    minInput.value = '';
+    secInput.value = '';
+  }
+
+  const display = document.getElementById('timer-display');
+  if (display) display.textContent = '00:00';
+}
+
+function updateTimerDisplay() {
+  const display = document.getElementById('timer-display');
+  if (display) {
+    const m = String(Math.floor(timerTimeLeft / 60)).padStart(2, '0');
+    const s = String(timerTimeLeft % 60).padStart(2, '0');
+    display.textContent = `${m}:${s}`;
+  }
+}

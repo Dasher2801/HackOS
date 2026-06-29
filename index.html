@@ -16,7 +16,7 @@
         color: rgb(8, 23, 88);
         font-family: Arial, sans-serif;
         text-align: left;
-        shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         padding-bottom: 60px;
       }
       h1 {
@@ -153,7 +153,7 @@
       <span class="top-right">6/21/2023 3:41 PM</span>
     </div>
     
-    <div id="desktopApps">
+  <div id="desktopApps">
       <div class="window" id="Hackspace" style="display: none; left: 50%; top: 80px;">
         <div class="windowheader" data-windowid="Hackspace">
           <span class="headertext">Hackspace</span>
@@ -198,27 +198,27 @@
         </div>
       </div>
 
-<div class="window" id="terminal" style="display: none; left: 150px; top: 120px; width: 550px;">
-  <div class="windowheader" data-windowid="terminal">
-    <span class="headertext">Hackterm</span>
-    <div class="closebutton" data-windowid="terminal"></div>
-  </div>
-  <div class="window-content" id="terminal-content" style="background: #000; color: #00ff00; font-family: monospace; padding: 15px; height: 320px; display: flex; flex-direction: column; border-radius: 0 0 12px 12px; position: relative; overflow: hidden;">
+  <div class="window" id="terminal" style="display: none; left: 150px; top: 120px; width: 550px;">
+   <div class="windowheader" data-windowid="terminal">
+     <span class="headertext">Hackterm</span>
+     <div class="closebutton" data-windowid="terminal"></div>
+    </div>
+    <div class="window-content" id="terminal-content" style="background: #000; color: #00ff00; font-family: monospace; padding: 15px; height: 320px; display: flex; flex-direction: column; border-radius: 0 0 12px 12px; position: relative; overflow: hidden;">
     
     <canvas id="matrix-canvas" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;"></canvas>
 
-    <div id="terminal-cli-wrapper" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-      <div id="terminal-history" style="flex-grow: 1; overflow-y: auto; white-space: pre-wrap; margin-bottom: 10px; font-size: 14px; line-height: 1.4;">Willkommen bei HackOS CLI v1.0.0.
-Tippe 'help' für eine Liste aller Befehle.</div>
+          <div id="terminal-cli-wrapper" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
+            <div id="terminal-history" style="flex-grow: 1; overflow-y: auto; white-space: pre-wrap; margin-bottom: 10px; font-size: 14px; line-height: 1.4;">Willkommen bei HackOS CLI v1.0.0.
+             Tippe 'help' für eine Liste aller Befehle.</div>
       
-      <div style="display: flex; align-items: center; font-size: 14px;">
-        <span style="color: #88ff88; margin-right: 8px; user-select: none;">hackos@user:~$</span>
-        <input type="text" id="terminal-input" style="flex-grow: 1; background: transparent; border: none; color: #00ff00; font-family: monospace; font-size: 14px; outline: none;" autocomplete="off" spellcheck="false" />
-      </div>
-    </div>
+            <div style="display: flex; align-items: center; font-size: 14px;">
+              <span style="color: #88ff88; margin-right: 8px; user-select: none;">hackos@user:~$</span>
+             <input type="text" id="terminal-input" style="flex-grow: 1; background: transparent; border: none; color: #00ff00; font-family: monospace; font-size: 14px; outline: none;" autocomplete="off" spellcheck="false" />
+           </div>
+          </div>
 
-  </div>
-</div>
+        </div>
+      </div>
 
       <div class="window" id="app3" style="display: none; left: 100px; top: 150px; width: 320px;">
         <div class="windowheader" data-windowid="app3">
@@ -254,19 +254,65 @@ Tippe 'help' für eine Liste aller Befehle.</div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="taskbar">
-      <div class="taskbar-content">
-        <div class="taskbar-apps">
-          <button class="taskbar-app" data-app="welcome" title="Welcome">🏠</button>
-          <button class="taskbar-app" data-app="Hackspace" title="Hackspace">📁</button>
-          <button class="taskbar-app" data-app="app3" title="Taschenrechner">🧮</button>
-          <button class="taskbar-app" data-app="terminal" title="Terminal">📟</button>
+    <div class="window" id="app5" style="display: none; left: 100px; top: 150px; width: 320px;">
+         <div class="windowheader" data-windowid="app5">
+           <span class="headertext">Hacknotes</span>
+           <div class="closebutton" data-windowid="app5"></div>
+          </div>
+      
+          <div class="window-content" style="padding: 15px;">
+            <textarea style="width: 100%; height: 180px; resize: none; box-sizing: border-box; background: #222; color: #fff; border: 1px solid #444; padding: 10px; font-family: monospace; border-radius: 4px;"></textarea>
+         </div> 
         </div>
+    <div class="window" id="app6" style="display:none; left:100px; top: 150px; width: 330px;">
+      <div class="windowheader" data-windowid="app6">
+       <span class="headertext">Hackclock</span>
+       <div class="closebutton" data-windowid="app6"></div>
+      </div>
+      <div class="window-content" style="padding:15px; color: #fff; font-family: monospace;">
+        
+        <!-- Live-Uhrzeit Anzeige -->
+        <div style="text-align: center; margin-bottom: 20px;">
+          <div style="font-size: 11px; color: #00ff00; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Live-Uhrzeit</div>
+          <div id="clock-display" style="background: #1a1a1a; color: #00ff00; padding: 12px; border-radius: 6px; font-size: 32px; border: 1px solid rgba(0, 255, 0, 0.3); box-shadow: inset 0 0 10px rgba(0,255,0,0.2);">00:00:00</div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px dashed rgba(255, 255, 255, 0.2); margin: 15px 0;">
+
+        <!-- Timer Bereich -->
+        <div style="text-align: center;">
+          <div style="font-size: 11px; color: #ff9800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Countdown Timer</div>
+          <div id="timer-display" style="background: #1a1a1a; color: #ff9800; padding: 10px; border-radius: 6px; font-size: 26px; margin-bottom: 12px; border: 1px solid rgba(255, 152, 0, 0.3);">00:00</div>
+          
+          <!-- Timer Eingabefelder -->
+          <div id="timer-inputs" style="display: flex; justify-content: center; gap: 8px; margin-bottom: 15px;">
+            <input type="number" id="timer-min" min="0" max="99" placeholder="Min" style="width: 65px; background: #222; border: 1px solid #444; color: #fff; padding: 6px; text-align: center; border-radius: 4px; font-family: monospace; font-size: 14px;">
+            <span style="align-self: center; color: #888; font-weight: bold;">:</span>
+            <input type="number" id="timer-sec" min="0" max="59" placeholder="Sek" style="width: 65px; background: #222; border: 1px solid #444; color: #fff; padding: 6px; text-align: center; border-radius: 4px; font-family: monospace; font-size: 14px;">
+          </div>
+
+          <!-- Timer Buttons -->
+          <div style="display: flex; gap: 8px; justify-content: center;">
+            <button id="timer-start-btn" onclick="toggleTimer()" style="flex: 1; padding: 8px; background: #4CAF50; border: none; color: white; border-radius: 4px; cursor: pointer; font-family: monospace; font-weight: bold; transition: opacity 0.15s;">Start</button>
+            <button onclick="resetTimer()" style="padding: 8px; background: #ff4444; border: none; color: white; border-radius: 4px; cursor: pointer; font-family: monospace; font-weight: bold; transition: opacity 0.15s;">Reset</button>
+          </div>
+        </div>
+
       </div>
     </div>
-
+     <div class="taskbar">
+        <div class="taskbar-content">
+          <div class="taskbar-apps">
+            <button class="taskbar-app" data-app="welcome" title="Welcome">🏠</button>
+            <button class="taskbar-app" data-app="Hackspace" title="Hackspace">📁</button>
+            <button class="taskbar-app" data-app="app3" title="Taschenrechner">🧮</button>
+            <button class="taskbar-app" data-app="terminal" title="Terminal">📟</button>
+            <button class="taskbar-app" data-app="app5" title="Hacknotes">📝</button>
+            <button class="taskbar-app" data-app="app6" title="Hackclock">⏱️</button>
+          </div>
+        </div>
+       </div>
+   </div>
     <script>
       function updateTime() {
         const now = new Date();
