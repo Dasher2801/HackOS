@@ -157,19 +157,22 @@
       <div class="window" id="Hackspace" style="display: none; left: 50%; top: 80px;">
         <div class="windowheader" data-windowid="Hackspace">
           <span class="headertext">Hackspace</span>
-          <div class="closebutton" data-windowid="Hackspace"></div>
+          <div class="window-controls">
+            <button class="maximizebutton" data-windowid="Hackspace" type="button"></button>
+            <div class="closebutton" data-windowid="Hackspace"></div>
+          </div>
         </div>
         <div class="window-content">
     <h1 style="margin: 0 0 20px 0;">Projekt-Arbeitsbereich</h1>
-    <p>
-        Willkommen in deiner Schaltzentrale.
-         Hier behältst du den absoluten Überblick
-        über deine aktiven Projekte, 
-        verknüpften Repositories und deren Status.
-        Alle wichtigen Informationen auf einen Blick,
-        damit du immer weißt,
-        wo du stehst und was als Nächstes ansteht.
-    </p><absolute>
+    <p><absolute>
+      Welcome to your command center.
+      Here, you maintain a complete overview
+      of your active projects,
+      linked repositories, and their status.
+      All key information at a glance,
+      so you always know
+      where you stand and what’s next.
+    </p></absolute>
     
     <div id="repo-stats" style="margin: 20px 0; padding: 15px; background: rgba(0, 255, 0, 0.05); border: 1px solid rgba(0, 255, 0, 0.2); border-radius: 4px; font-family: monospace; color: #00ff00; line-height: 1.5;">
         <div>> Verbinde mit GitHub-API...</div>
@@ -181,7 +184,10 @@
       <div class="window" id="welcome" style="display: none; left: 50%; top: 80px;">
         <div class="windowheader" data-windowid="welcome">
           <span class="headertext">Welcome to HackOS</span>
-          <div class="closebutton" data-windowid="welcome"></div>
+          <div class="window-controls">
+            <button class="maximizebutton" data-windowid="welcome" type="button"></button>
+            <div class="closebutton" data-windowid="welcome"></div>
+          </div>
         </div>
         <div class="window-content">
           <h1 style="margin: 0 0 20px 0;">Welcome to HackOS</h1>
@@ -190,7 +196,7 @@
           <div style="margin-top: 15px; text-align: center;">
       <a href="https://hackclub.enterprise.slack.com/archives/C0B9M0E4UUB" target="_blank" 
        style="display: inline-block; padding: 10px 20px; background: #00ff00; color: #000; font-family: monospace; font-weight: bold; text-decoration: none; border-radius: 4px; box-shadow: 0 0 10px rgba(0,255,0,0.5);">
-       🤖 BOT IM SLACK TESTEN
+       🤖 test Dashers_Slck-bot in Slack
       </a>
     </div>
           <img src="Bergmitsee.jpg" alt="Berg mit See" width="500" height="300">
@@ -201,15 +207,17 @@
   <div class="window" id="terminal" style="display: none; left: 150px; top: 120px; width: 550px;">
    <div class="windowheader" data-windowid="terminal">
      <span class="headertext">Hackterm</span>
-     <div class="closebutton" data-windowid="terminal"></div>
+     <div class="window-controls">
+       <button class="maximizebutton" data-windowid="terminal" type="button"></button>
+       <div class="closebutton" data-windowid="terminal"></div>
+     </div>
     </div>
     <div class="window-content" id="terminal-content" style="background: #000; color: #00ff00; font-family: monospace; padding: 15px; height: 320px; display: flex; flex-direction: column; border-radius: 0 0 12px 12px; position: relative; overflow: hidden;">
     
     <canvas id="matrix-canvas" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10;"></canvas>
 
           <div id="terminal-cli-wrapper" style="display: flex; flex-direction: column; height: 100%; width: 100%;">
-            <div id="terminal-history" style="flex-grow: 1; overflow-y: auto; white-space: pre-wrap; margin-bottom: 10px; font-size: 14px; line-height: 1.4;">Willkommen bei HackOS CLI v1.0.0.
-             Tippe 'help' für eine Liste aller Befehle.</div>
+            <div id="terminal-history" style="flex-grow: 1; overflow-y: auto; white-space: pre-wrap; margin-bottom: 10px; font-size: 14px; line-height: 1.4;">welcome to Hackterm type 'help' for a list of commands.</div>
       
             <div style="display: flex; align-items: center; font-size: 14px;">
               <span style="color: #88ff88; margin-right: 8px; user-select: none;">hackos@user:~$</span>
@@ -222,8 +230,11 @@
 
       <div class="window" id="app3" style="display: none; left: 100px; top: 150px; width: 320px;">
         <div class="windowheader" data-windowid="app3">
-          <span class="headertext">Taschenrechner</span>
-          <div class="closebutton" data-windowid="app3"></div>
+          <span class="headertext">Calculator</span>
+          <div class="window-controls">
+            <button class="maximizebutton" data-windowid="app3" type="button"></button>
+            <div class="closebutton" data-windowid="app3"></div>
+          </div>
         </div>
         <div class="window-content" style="padding: 15px;">
           <div id="calculator-display" style="background: #1a1a1a; color: #00ff00; padding: 15px; border-radius: 4px; font-size: 28px; text-align: right; margin-bottom: 10px; font-family: monospace; min-height: 40px; border: 1px solid rgba(0, 255, 0, 0.3);">0</div>
@@ -257,7 +268,10 @@
     <div class="window" id="app5" style="display: none; left: 100px; top: 150px; width: 320px;">
          <div class="windowheader" data-windowid="app5">
            <span class="headertext">Hacknotes</span>
-           <div class="closebutton" data-windowid="app5"></div>
+           <div class="window-controls">
+             <button class="maximizebutton" data-windowid="app5" type="button"></button>
+             <div class="closebutton" data-windowid="app5"></div>
+           </div>
           </div>
       
           <div class="window-content" style="padding: 15px;">
@@ -267,31 +281,30 @@
     <div class="window" id="app6" style="display:none; left:100px; top: 150px; width: 330px;">
       <div class="windowheader" data-windowid="app6">
        <span class="headertext">Hackclock</span>
-       <div class="closebutton" data-windowid="app6"></div>
+       <div class="window-controls">
+         <button class="maximizebutton" data-windowid="app6" type="button"></button>
+         <div class="closebutton" data-windowid="app6"></div>
+       </div>
       </div>
       <div class="window-content" style="padding:15px; color: #fff; font-family: monospace;">
-        
-        <!-- Live-Uhrzeit Anzeige -->
+
         <div style="text-align: center; margin-bottom: 20px;">
-          <div style="font-size: 11px; color: #00ff00; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Live-Uhrzeit</div>
+          <div style="font-size: 11px; color: #00ff00; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Live-time</div>
           <div id="clock-display" style="background: #1a1a1a; color: #00ff00; padding: 12px; border-radius: 6px; font-size: 32px; border: 1px solid rgba(0, 255, 0, 0.3); box-shadow: inset 0 0 10px rgba(0,255,0,0.2);">00:00:00</div>
         </div>
 
         <hr style="border: 0; border-top: 1px dashed rgba(255, 255, 255, 0.2); margin: 15px 0;">
 
-        <!-- Timer Bereich -->
         <div style="text-align: center;">
           <div style="font-size: 11px; color: #ff9800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">Countdown Timer</div>
           <div id="timer-display" style="background: #1a1a1a; color: #ff9800; padding: 10px; border-radius: 6px; font-size: 26px; margin-bottom: 12px; border: 1px solid rgba(255, 152, 0, 0.3);">00:00</div>
-          
-          <!-- Timer Eingabefelder -->
+      
           <div id="timer-inputs" style="display: flex; justify-content: center; gap: 8px; margin-bottom: 15px;">
             <input type="number" id="timer-min" min="0" max="99" placeholder="Min" style="width: 65px; background: #222; border: 1px solid #444; color: #fff; padding: 6px; text-align: center; border-radius: 4px; font-family: monospace; font-size: 14px;">
             <span style="align-self: center; color: #888; font-weight: bold;">:</span>
             <input type="number" id="timer-sec" min="0" max="59" placeholder="Sek" style="width: 65px; background: #222; border: 1px solid #444; color: #fff; padding: 6px; text-align: center; border-radius: 4px; font-family: monospace; font-size: 14px;">
           </div>
 
-          <!-- Timer Buttons -->
           <div style="display: flex; gap: 8px; justify-content: center;">
             <button id="timer-start-btn" onclick="toggleTimer()" style="flex: 1; padding: 8px; background: #4CAF50; border: none; color: white; border-radius: 4px; cursor: pointer; font-family: monospace; font-weight: bold; transition: opacity 0.15s;">Start</button>
             <button onclick="resetTimer()" style="padding: 8px; background: #ff4444; border: none; color: white; border-radius: 4px; cursor: pointer; font-family: monospace; font-weight: bold; transition: opacity 0.15s;">Reset</button>

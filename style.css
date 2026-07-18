@@ -8,6 +8,8 @@
   background-color: rgba(0, 0, 0, 0.125);
   min-width: 400px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .windowheader {
@@ -18,6 +20,8 @@
   justify-content: space-between;
   padding: 12px 16px;
   user-select: none;
+  gap: 8px;
+  box-sizing: border-box;
 }
 
 .headertext {
@@ -25,6 +29,15 @@
   color: #fff;
   font-weight: 500;
   flex-grow: 1;
+  min-width: 0;
+}
+
+.window-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .closebutton {
@@ -41,7 +54,6 @@
   font-size: 20px;
   font-weight: bold;
   transition: all 0.15s ease;
-  margin-right: 16px;
 }
 
 .closebutton::before {
@@ -51,6 +63,39 @@
 .closebutton:hover {
   background-color: #EC6B5E;
   color: #fff;
+}
+
+.maximizebutton {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 4px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 20px;
+  font-weight: bold;
+  transition: all 0.15s ease;
+}
+
+.maximizebutton::before {
+  content: "⬜";
+}
+
+.maximizebutton:hover {
+  background-color: #EC6B5E;
+  color: #fff;
+}
+
+.window.maximized {
+  top: 0 !important;
+  left: 0 !important;
+  width: calc(100vw - 24px) !important;
+  height: calc(100vh - 84px) !important;
+  border-radius: 0;
 }
 
 .taskbar {

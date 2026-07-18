@@ -1,13 +1,13 @@
 # 💻 HackOS
-HackOS ist ein webbasiertes Pseudo-Betriebssystem im Dark-Hacker-Look[cite: 11, 12]. Es bietet eine interaktive Desktop-Umgebung mit flexibler Taskbar und einer permanenten Topbar-Uhr[cite: 11, 12, 14].
+HackOS is a web-based pseudo-operating system featuring a "dark hacker" aesthetic[cite: 11, 12]. It offers an interactive desktop environment with a flexible taskbar and a persistent clock in the top bar[cite: 11, 12, 14].
 
-## 🛠️ Integrierte Apps
-* **Welcome:** Startfenster mit Slack-Bot-Anbindung[cite: 11, 12].
-* **Hackspace:** Live-GitHub-API-Dashboard für Repo-Status und Commits[cite: 11, 13].
-* **Hackterm:** CLI-Terminal mit Custom-Befehlen (`help`, `clear`, `neofetch`) und Matrix-Code-Simulation[cite: 11, 13].
-* **Taschenrechner:** Grid-Rechner für mathematische Operationen[cite: 11, 12].
-* **Hacknotes:** Kompakter Texteditor für schnelle Notizen[cite: 11].
-* **Hackclock:** Zeitzentrale mit Sekundenuhr und Countdown-Timer (Start/Pause/Reset)[cite: 11].
+## 🛠️ Integrated Apps
+* **Welcome:** Startup window with Slack bot integration[cite: 11, 12].
+* **Hackspace:** Live GitHub API dashboard for repo status and commits[cite: 11, 13].
+* **Hackterm:** CLI terminal with custom commands (`help`, `clear`, `neofetch`) and Matrix-style code simulation[cite: 11, 13].
+* **Calculator:** Grid-based calculator for mathematical operations[cite: 11, 12].
+* **Hacknotes:** Compact text editor for quick notes[cite: 11].
+* **Hackclock:** Timekeeping tool with a seconds display and countdown timer (start/pause/reset)[cite: 11].
 
-## 👑 System-Highlights
-* **Fenster-Management:** Alle Apps öffnen in verschiebbaren Fenstern (Drag & Drop) mit automatischer Z-Index-Vordergrundsteuerung[cite: 11, 13, 14].
+## 👑 System Highlights
+* **Window Management:** All apps open in movable windows (drag-and-drop) with automatic z-index foreground management[cite: 11, 13, 14].

@@ -17,7 +17,12 @@ function makeWindowDraggable(element) {
   if (header) {
     header.addEventListener('mousedown', function(e) {
 
-      if (e.target.classList.contains('closebutton') || e.target.closest('.closebutton')) {
+      if (
+        e.target.classList.contains('closebutton') ||
+        e.target.closest('.closebutton') ||
+        e.target.classList.contains('maximizebutton') ||
+        e.target.closest('.maximizebutton')
+      ) {
         return;
       }
       
@@ -84,6 +89,23 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
   
+  const maximizebuttons = document.querySelectorAll('.maximizebutton');
+  maximizebuttons.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const windowId = this.dataset.windowid;
+      if (windowId) {
+        const window = document.getElementById(windowId);
+        if (window) {
+          if (window.classList.contains('maximized')) {
+            window.classList.remove('maximized');
+          } else {
+            window.classList.add('maximized');
+          }
+        }
+      }
+    });
+  });
 
   const taskbarApps = document.querySelectorAll('.taskbar-app');
   taskbarApps.forEach(btn => {
@@ -154,8 +176,8 @@ async function fetchGitHubStats() {
 
         statsContainer.innerHTML = `
             <div style="color: #00ff00; margin-bottom: 6px;"><strong>📁 Workspace:</strong> ~/${repoName}</div>
-            <div style="color: #00ff00; margin-bottom: 6px;"><strong>🟢 Status:</strong> Active (GitHub Sync OK)</div>
-            <div style="color: #00ff00; margin-bottom: 6px;"><strong>🔧 Sprache:</strong> ${language}</div>
+            <div style="color: #00ff00; margin-bottom: 6px;"><strong>🟢 status:</strong> Active (GitHub Sync OK)</div>
+            <div style="color: #00ff00; margin-bottom: 6px;"><strong>🔧 language:</strong> ${language}</div>
             <div style="color: #00ff00; margin-bottom: 6px;"><strong>⭐ Stars:</strong> ${stars}</div>
             <div style="color: #88ff88; margin-top: 10px; border-top: 1px dashed rgba(0,255,0,0.2); padding-top: 8px;">
                 <strong>💻 Letzter Commit:</strong> "${latestCommitMessage}"
@@ -215,7 +237,7 @@ function calculatorEquals() {
     calculatorDisplay = String(result);
     updateCalculatorDisplay();
   } catch (error) {
-    calculatorDisplay = 'Fehler';
+    calculatorDisplay = 'error';
     updateCalculatorDisplay();
     setTimeout(() => {
       calculatorDisplay = '0';
@@ -242,6 +264,63 @@ function handleWindowTap(element) {
   element.style.zIndex = biggestIndex;
   topBar.style.zIndex = biggestIndex + 1;
   deselectIcon(selectedIcon)
+}
+
+function formatBytes(bytes) {
+  if (!Number.isFinite(bytes) || bytes <= 0) return 'n/a';
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+  let size = bytes;
+  let unitIndex = 0;
+
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex += 1;
+  }
+
+  return `${size.toFixed(size >= 10 || unitIndex === 0 ? 0 : 1)} ${units[unitIndex]}`;
+}
+
+function getSystemInfo() {
+  let cpu = 'Unbekannt';
+  if (navigator.hardwareConcurrency) {
+    cpu = `${navigator.hardwareConcurrency} Cores`;
+  }
+
+  let gpu = 'Unbekannt';
+  const canvas = document.createElement('canvas');
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+  if (gl) {
+    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+    const renderer = gl.getParameter(gl.RENDERER);
+    const vendor = gl.getParameter(gl.VENDOR);
+
+    if (renderer && vendor) {
+      gpu = `${vendor} / ${renderer}`;
+    } else if (renderer) {
+      gpu = renderer;
+    }
+
+    if (debugInfo) {
+      const unmaskedRenderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+      if (unmaskedRenderer) {
+        gpu = unmaskedRenderer;
+      }
+    }
+  }
+
+  const deviceRam = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Unbekannt';
+  const heapInfo = performance.memory
+    ? `Heap: ${formatBytes(performance.memory.usedJSHeapSize)} / ${formatBytes(performance.memory.jsHeapSizeLimit)}`
+    : '';
+
+  return {
+    os: navigator.userAgentData?.platform || navigator.platform || 'Unbekannt',
+    cpu,
+    gpu,
+    ram: heapInfo ? `${deviceRam} (${heapInfo})` : deviceRam,
+    browser: navigator.userAgent.match(/(Firefox|Chrome|Safari|Edg|OPR)\//)?.[1] || 'Browser'
+  };
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -276,11 +355,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     switch(primaryCmd) {
       case 'help':
-        termHistory.innerHTML += `\n\nVerfügbare Befehle:\n  help      - Zeigt diese Übersicht an\n  matrix    - Startet den digitalen Code-Regen\n  clear     - Leert den Terminal-Bildschirm\n  neofetch  - Zeigt System-Informationen\n  whoami    - Verrät dir, wer du bist`;
+        termHistory.innerHTML += `\n\n available commands:\n  help      - shows this overview\n  matrix    - starts the digital rain\n  clear     - clears the terminal screen\n  neofetch  - displays system information\n  whoami    - reveals your identity`;
         break;
         
       case 'clear':
-        termHistory.innerHTML = 'Bildschirm geleert. Tippe \'help\' für Befehle.';
+        termHistory.innerHTML = 'Screen cleared. Type \'help\' for commands.';
         break;
 
       case 'matrix':
@@ -291,9 +370,11 @@ document.addEventListener('DOMContentLoaded', function() {
         termHistory.innerHTML += `\nroot@hackos - Mastermind & System-Architekt.`;
         break;
         
-      case 'neofetch':
-        termHistory.innerHTML += `\n\n   /\\_/\\      root@hackos\n  ( o.o )     -----------\n   > ^ <      OS: HackOS v1.0\n              Shell: hack.term`;
+      case 'neofetch': {
+        const systemInfo = getSystemInfo();
+        termHistory.innerHTML += `\n\n   /\\_/\\      root@hackos\n  ( o.o )     -----------\n   > ^ <      OS: ${systemInfo.os}\n              CPU: ${systemInfo.cpu}\n              GPU: ${systemInfo.gpu}\n              RAM: ${systemInfo.ram}\n              Browser: ${systemInfo.browser}`;
         break;
+      }
         
       default:
         termHistory.innerHTML += `\n<span style="color: #ff3333;">Befehl nicht gefunden: '${primaryCmd}'.</span>`;
@@ -342,22 +423,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         rainDrops[i]++;
       }
-    } // HIER: Schließt die draw-Funktion sauber ab!
-
-    // Startet das Intervall einmalig außerhalb der draw-Funktion
+    } 
     matrixInterval = setInterval(draw, 33);
-  } // HIER: Schließt die startMatrix-Funktion sauber ab!
+  } 
 
   function stopMatrix() {
     if (matrixInterval) {
       clearInterval(matrixInterval);
       matrixInterval = null;
       
-      // Canvas wieder verstecken, CLI einblenden
       canvas.style.display = 'none';
       cliWrapper.style.display = 'flex';
-      
-      // Kurze Info ausgeben und Input wieder fokussieren
+
       termHistory.innerHTML += `\nMatrix-Simulation beendet.`;
       termInput.focus();
       termHistory.scrollTop = termHistory.scrollHeight;
@@ -377,7 +454,7 @@ function updateHackclockDisplay() {
 }
 
 setInterval(updateHackclockDisplay, 1000);
-updateHackclockDisplay(); // Direkt einmal beim Start laden
+updateHackclockDisplay();
 
 
 
