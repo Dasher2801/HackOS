@@ -61,6 +61,64 @@ function makeWindowDraggable(element) {
 }
 
 
+function makeWindowResizable(element) {
+  if (element.querySelector('.window-resize-handle')) {
+    return;
+  }
+
+  const handle = document.createElement('div');
+  handle.className = 'window-resize-handle';
+  handle.setAttribute('title', 'Drag to resize');
+  handle.setAttribute('aria-label', 'Resize window');
+  element.appendChild(handle);
+
+  let isResizing = false;
+  let startX = 0;
+  let startY = 0;
+  let startWidth = 0;
+  let startHeight = 0;
+
+  const onMouseMove = (e) => {
+    if (!isResizing) return;
+
+    e.preventDefault();
+
+    const deltaX = e.clientX - startX;
+    const deltaY = e.clientY - startY;
+    const nextWidth = Math.max(280, startWidth + deltaX);
+    const nextHeight = Math.max(220, startHeight + deltaY);
+
+    element.style.width = `${nextWidth}px`;
+    element.style.height = `${nextHeight}px`;
+  };
+
+  const onMouseUp = () => {
+    isResizing = false;
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  handle.addEventListener('mousedown', function(e) {
+    if (element.classList.contains('maximized')) {
+      return;
+    }
+
+    isResizing = true;
+    e.preventDefault();
+    e.stopPropagation();
+
+    startX = e.clientX;
+    startY = e.clientY;
+    startWidth = element.offsetWidth;
+    startHeight = element.offsetHeight;
+
+    element.style.zIndex = getNextZIndex();
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+}
+
 function updateTime() {
   const now = new Date();
   const options = { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' };
@@ -69,10 +127,11 @@ function updateTime() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Make all windows draggable
+  // Make all windows draggable and resizable
   const windows = document.querySelectorAll('.window');
   windows.forEach(win => {
     makeWindowDraggable(win);
+    makeWindowResizable(win);
   });
 
   const closeButtons = document.querySelectorAll('.closebutton');
